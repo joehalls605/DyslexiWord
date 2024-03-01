@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dyslexia</title>
+</head>
+<body>
+    <h1>Dyslexia App</h1>
+    <p>Let's put your spelling skills to the test with some frequently misspelled words.</p>
+
+    <button onclick="playSound()">Play Sound</button>
+
+    <input type="text" id="text_input" placeholder="Enter a word" value="">
+
+    <audio id="myAudio">
+        <source src="./sounds/acceptable.mp3">
+    </audio>
+    
+<script>
+import wordData from './wordData.js'
+
+
+function validateWordInput(){
+    
+}
+
+function randomiseSound(wordData){
+
+    // Generating a random index
+    const randomIndex = Math.floor(Math.random() * wordData.length);
+
+    // Retrieving a random word from the wordData array using the random index
+
+    const randomWord = wordData[randomIndex].word;
+
+    return randomWord
+}
+
+function playSound(){
+    var audio = document.getElementById("myAudio");
+    audio.play();
+}
+</script>
+</body>
+</html>
