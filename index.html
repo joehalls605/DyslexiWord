@@ -16,31 +16,47 @@
     <audio id="myAudio">
         <source src="./sounds/acceptable.mp3">
     </audio>
-    
-<script>
-import wordData from './wordData.js'
 
+    <button id="submitButton">submit</button>
 
-function validateWordInput(){
-    
+    <script>
+
+// Define wordData
+const wordData = [
+    {_id: "1", word: "acceptable", sound: "./sounds/acceptable.mp3"},
+    {_id: "2", word: "accommodate", sound: "./sounds/accommodate.mp3"},
+    {_id: "3", word: "drunkenness", sound: "./sounds/drunkenness.mp3"},
+];
+
+// Define the functions
+function validateWordInput(word) {
+    const text_input_element = document.getElementById("text_input");
+    const audio = document.getElementById("myAudio");
+
+    if(text_input_element.value === word){
+        audio.src = word.sound;
+        audio.play();
+    }
+
 }
 
-function randomiseSound(wordData){
-
+function randomiseWord(){
     // Generating a random index
     const randomIndex = Math.floor(Math.random() * wordData.length);
 
     // Retrieving a random word from the wordData array using the random index
-
     const randomWord = wordData[randomIndex].word;
 
-    return randomWord
+    console.log(randomWord);
+    validateWordInput(randomWord);
 }
 
-function playSound(){
+document.getElementById("submitButton").addEventListener("click", randomiseWord());
+
+function playSound() {
     var audio = document.getElementById("myAudio");
     audio.play();
 }
-</script>
+    </script>
 </body>
 </html>
