@@ -19,6 +19,7 @@
         </audio>
     
         <button id="submitButton">submit</button>
+        <p id="answerOutput"></p>
     </div>
 
     <script>
@@ -28,7 +29,20 @@ const wordData = [
     {_id: "1", word: "acceptable", sound: "./sounds/acceptable.mp3"},
     {_id: "2", word: "accommodate", sound: "./sounds/accommodate.mp3"},
     {_id: "3", word: "drunkenness", sound: "./sounds/drunkenness.mp3"},
+    {_id: "4", word: "vicious", sound: "./sounds/vicious.mp3"},
+    {_id: "5", word: "acquire", sound: "./sounds/acquire.mp3"},
+    {_id: "5", word: "atheist", sound: "./sounds/atheist.mp3"},
+    {_id: "5", word: "exhilarate", sound: "./sounds/exhilarate.mp3"},
+    {_id: "5", word: "mischievous", sound: "./sounds/mischievous.mp3"},
+    {_id: "5", word: "parliament", sound: "./sounds/parliament.mp3"},
+    {_id: "5", word: "noticeable", sound: "./sounds/noticeable.mp3"},
+    {_id: "5", word: "questionnaire", sound: "./sounds/questionnaire.mp3"},
+
+
+
+
 ];
+
 
 let randomWord;
 
@@ -48,18 +62,17 @@ function randomiseWord(){
 function validateWordInput() {
     const text_input_element = document.getElementById("text_input");
     const appDivElement = document.getElementById("app");
+    const answerOutput = document.getElementById("answerOutput");
+
 
     if(text_input_element.value === randomWord){
-    const correctElement = document.createElement("p");
-    correctElement.textContent = "correct";
-    appDivElement.appendChild(correctElement);
+    answerOutput.textContent = "correct";
 
     }
     else{
-    const incorrectElement = document.createElement("p");
-    incorrectElement.textContent = "incorrect";
-    appDivElement.appendChild(incorrectElement);
+    answerOutput.textContent = "incorrect";
     }
+    randomiseWord();
 }
 
 function playSound() {
