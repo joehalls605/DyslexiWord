@@ -6,18 +6,20 @@
     <title>Dyslexia</title>
 </head>
 <body>
-    <h1>Dyslexia App</h1>
-    <p>Let's put your spelling skills to the test with some frequently misspelled words.</p>
-
-    <button onclick="playSound()">Play Sound</button>
-
-    <input type="text" id="text_input" placeholder="Enter a word" value="">
-
-    <audio id="myAudio">
-        <source src="./sounds/acceptable.mp3">
-    </audio>
-
-    <button id="submitButton">submit</button>
+    <div id="app">
+        <h1>Dyslexia App</h1>
+        <p>Let's put your spelling skills to the test with some frequently misspelled words.</p>
+    
+        <button onclick="playSound()">Play Sound</button>
+    
+        <input type="text" id="text_input" placeholder="Enter a word" value="">
+    
+        <audio id="myAudio">
+            <source src="./sounds/acceptable.mp3">
+        </audio>
+    
+        <button id="submitButton">submit</button>
+    </div>
 
     <script>
 
@@ -45,14 +47,19 @@ function randomiseWord(){
 // Define the functions
 function validateWordInput() {
     const text_input_element = document.getElementById("text_input");
-    console.log("this is the validate function" + randomWord);
+    const appDivElement = document.getElementById("app");
+
     if(text_input_element.value === randomWord){
-        alert("correct!");
+    const correctElement = document.createElement("p");
+    correctElement.textContent = "correct";
+    appDivElement.appendChild(correctElement);
+
     }
-    alert("incorrect");
-
-    
-
+    else{
+    const incorrectElement = document.createElement("p");
+    incorrectElement.textContent = "incorrect";
+    appDivElement.appendChild(incorrectElement);
+    }
 }
 
 function playSound() {
