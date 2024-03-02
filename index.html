@@ -28,35 +28,42 @@ const wordData = [
     {_id: "3", word: "drunkenness", sound: "./sounds/drunkenness.mp3"},
 ];
 
-// Define the functions
-function validateWordInput(word) {
-    const text_input_element = document.getElementById("text_input");
-    const audio = document.getElementById("myAudio");
+let randomWord;
 
-    if(text_input_element.value === word){
-        audio.src = word.sound;
-        audio.play();
-    }
-
-}
+randomiseWord();
 
 function randomiseWord(){
     // Generating a random index
     const randomIndex = Math.floor(Math.random() * wordData.length);
 
     // Retrieving a random word from the wordData array using the random index
-    const randomWord = wordData[randomIndex].word;
-
+    randomWord = wordData[randomIndex].word;
     console.log(randomWord);
-    validateWordInput(randomWord);
 }
 
-document.getElementById("submitButton").addEventListener("click", randomiseWord());
+
+// Define the functions
+function validateWordInput() {
+    const text_input_element = document.getElementById("text_input");
+    console.log("this is the validate function" + randomWord);
+    if(text_input_element.value === randomWord){
+        alert("correct!");
+    }
+    alert("incorrect");
+
+    
+
+}
 
 function playSound() {
     var audio = document.getElementById("myAudio");
     audio.play();
 }
+
+const btnElement = document.getElementById("submitButton");
+btnElement.addEventListener("click", validateWordInput);
+
+
     </script>
 </body>
 </html>
