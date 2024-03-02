@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dyslexia</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <h1>Dyslexia App</h1>
-        <p>Let's put your spelling skills to the test with some frequently misspelled words.</p>
+    <div id="app" class="p-10">
+        <div class="text-xl pb-8">
+            <h1 >Dyslexia App</h1>
+            <p>Let's put your spelling skills to the test with some frequently misspelled words.</p>
+        </div>
+   
+        <div class="text-xl pb-8 border-4">
+            <button onclick="playSound()">Play Sound</button>
+        </div>
     
-        <button onclick="playSound()">Play Sound</button>
+      
     
-        <input type="text" id="text_input" placeholder="Enter a word" value="">
+        <input type="text" id="text_input" placeholder="Enter a word" value="" class="text-xl border-4">
     
         <audio id="myAudio">
             <source src="./sounds/acceptable.mp3">
@@ -38,9 +45,6 @@ const wordData = [
     {_id: "5", word: "noticeable", sound: "./sounds/noticeable.mp3"},
     {_id: "5", word: "questionnaire", sound: "./sounds/questionnaire.mp3"},
 
-
-
-
 ];
 
 
@@ -48,13 +52,18 @@ let randomWord;
 
 randomiseWord();
 
+
 function randomiseWord(){
     // Generating a random index
     const randomIndex = Math.floor(Math.random() * wordData.length);
 
     // Retrieving a random word from the wordData array using the random index
     randomWord = wordData[randomIndex].word;
+
+    const audioSrc = `./sounds/${randomWord}.mp3`;
     console.log(randomWord);
+    const audioElement = document.getElementById("myAudio");
+    audioElement.setAttribute("src", audioSrc);
 }
 
 
