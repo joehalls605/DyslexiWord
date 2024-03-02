@@ -13,20 +13,24 @@
             <p>Let's put your spelling skills to the test with some frequently misspelled words.</p>
         </div>
    
-        <div class="text-xl pb-8 border-4">
+        <div class="text-xl pb-8 border-4 w-40">
+            <audio id="myAudio">
+                <source src="./sounds/acceptable.mp3">
+            </audio>
             <button onclick="playSound()">Play Sound</button>
         </div>
     
       
+        <div>
+            <input type="text" id="text_input" placeholder="Enter a word" value="" class="text-xl border-4 h-20">
+        </div>
+        
+        <div>
+            <button id="submitButton">submit</button>
+            <p id="answerOutput"></p>
+        </div>
     
-        <input type="text" id="text_input" placeholder="Enter a word" value="" class="text-xl border-4">
-    
-        <audio id="myAudio">
-            <source src="./sounds/acceptable.mp3">
-        </audio>
-    
-        <button id="submitButton">submit</button>
-        <p id="answerOutput"></p>
+     
     </div>
 
     <script>
