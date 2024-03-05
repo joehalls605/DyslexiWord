@@ -74,11 +74,13 @@ function randomiseWord(){
 // Define the functions
 function validateWordInput() {
     const text_input_element = document.getElementById("text_input");
+    const text_input_lowercase = text_input_element.value.toLowerCase();
+    console.log(text_input_lowercase);
     const appDivElement = document.getElementById("app");
     const answerOutput = document.getElementById("answerOutput");
 
 
-    if(text_input_element.value === randomWord){
+    if(text_input_lowercase === randomWord){
     answerOutput.textContent = "Correct";
     answerOutput.classList.add("bg-green-500");
 
