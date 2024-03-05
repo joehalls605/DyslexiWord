@@ -22,12 +22,12 @@
     
       
         <div>
-            <input type="text" id="text_input" placeholder="Enter a word" value="" class="text-xl border-4 h-20">
+            <input type="text" id="text_input" placeholder="Start typing..." value="" class="text-xl border-4 h-20 m-5 p-4">
         </div>
         
         <div>
-            <button id="submitButton">submit</button>
-            <p id="answerOutput"></p>
+            <button id="submitButton" class="text-xl pb-8 border-4 w-40 p-4" >Submit</button>
+            <p id="answerOutput" class="text-xl pb-8 w-40 p-4"></p>
         </div>
     
      
@@ -79,11 +79,14 @@ function validateWordInput() {
 
 
     if(text_input_element.value === randomWord){
-    answerOutput.textContent = "correct";
+    answerOutput.textContent = "Correct";
+    answerOutput.classList.add("bg-green-500");
+
 
     }
     else{
-    answerOutput.textContent = "incorrect";
+    answerOutput.textContent = "Incorrect";
+    answerOutput.classList.add("bg-red-500");
     }
     randomiseWord();
 }
