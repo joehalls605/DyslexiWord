@@ -10,10 +10,10 @@
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
         <div class="pb-8">
             <h1 class="text-4xl font-bold">Dyslexio</h1>
-            <p class="pt-4 text-xl">Let's put your spelling skills to the test with some frequently misspelled words.</p>
+            <p id="intro-slogan" class="pt-4 text-xl">Let's put your spelling skills to the test with some frequently misspelled words.</p>
         </div>
    
-        <div class="text-xl pb-8 border-4 w-40">
+        <div class="text-xl p-2 border-4 w-40">
             <audio id="myAudio">
                 <source src="./sounds/acceptable.mp3">
             </audio>
@@ -70,10 +70,18 @@ function randomiseWord(){
     audioElement.setAttribute("src", audioSrc);
 }
 
+function startGame(){
+    const introSloganELement = document.getElementById("intro-slogan")
+    introSloganELement.textContent = "";
+}
+
 
 // Define the functions
 function validateWordInput() {
   
+    startGame();
+
+
     const text_input_element = document.getElementById("text_input");
     const text_input_lowercase = text_input_element.value.toLowerCase();
     console.log(text_input_lowercase);
