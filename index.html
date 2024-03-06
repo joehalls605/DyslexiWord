@@ -9,7 +9,7 @@
 <body>
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
         <div class="pb-8">
-            <h1 class="text-4xl font-bold">Dyslexi Word</h1>
+            <h1 class="text-4xl font-bold">Dyslexio</h1>
             <p class="pt-4 text-xl">Let's put your spelling skills to the test with some frequently misspelled words.</p>
         </div>
    
@@ -26,7 +26,7 @@
         </div>
         
         <div>
-            <button id="submitButton" class="text-xl pb-8 border-4 w-40 p-4" >Submit</button>
+            <button id="submitButton" class="text-xl border-4 w-40 p-4" >Submit</button>
             <p id="answerOutput" class="text-xl pb-8 w-40 p-4"></p>
         </div>
     
@@ -73,23 +73,63 @@ function randomiseWord(){
 
 // Define the functions
 function validateWordInput() {
+  
     const text_input_element = document.getElementById("text_input");
     const text_input_lowercase = text_input_element.value.toLowerCase();
     console.log(text_input_lowercase);
+
+    const submitButtonElement = document.getElementById("submitButton");
+    submitButtonElement.classList.add("bg-gray-500", "text-white");
+
+
+    // UPDATING SUBMIT BUTTON. 
+    setTimeout(function(){
+        submitButtonElement.classList.remove("bg-gray-500", "text-white");
+        answerOutput.classList.remove();
+    }, 1000);
+
+     
     const appDivElement = document.getElementById("app");
     const answerOutput = document.getElementById("answerOutput");
-
+    
+    // UPDATING OUTPUT - CORRECT
 
     if(text_input_lowercase === randomWord){
     answerOutput.textContent = "Correct";
-    answerOutput.classList.add("bg-green-500");
+    answerOutput.classList.add("bg-green-500", "m-8");
 
+    setTimeout(function(){
+        submitButtonElement.classList.remove("bg-gray-500", "text-white");
+        answerOutput.classList.remove("bg-green-500", "m-8");
+        answerOutput.textContent = "";
+    }, 1000);
+
+
+    // UPDATING OUTPUT - INCORRECT
 
     }
     else{
     answerOutput.textContent = "Incorrect";
-    answerOutput.classList.add("bg-red-500");
+    answerOutput.classList.add("bg-red-500", "m-8");
+
+    
+    setTimeout(function(){
+        submitButtonElement.classList.remove("bg-gray-500", "text-white");
+        answerOutput.classList.remove("bg-red-50", "m-8");
+        answerOutput.textContent = "";
+    }, 1000);
     }
+
+    
+    setTimeout(function(){
+        submitButtonElement.classList.remove("bg-red-500", "m-8");
+        answerOutput.classList.remove("bg-red-500", "m-8");
+        answerOutput.value == "";
+    }, 1000);
+
+
+
+
     randomiseWord();
 }
 
