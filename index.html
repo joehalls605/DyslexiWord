@@ -79,7 +79,6 @@ function startGame(){
 // Define the functions
 function validateWordInput() {
   
-    startGame();
 
 
     const text_input_element = document.getElementById("text_input");
@@ -142,6 +141,7 @@ function validateWordInput() {
 }
 
 function playSound() {
+    startGame();
     var audio = document.getElementById("myAudio");
     audio.play();
 }
