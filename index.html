@@ -14,10 +14,11 @@
         </div>
    
         <div class="text-xl p-2 border-4 w-40">
-            <audio id="myAudio">
+            <audio id="myAudio" ontimeupdate="updateProgressBar()">
                 <source src="./sounds/acceptable.mp3">
             </audio>
             <button onclick="playSound()">Play Sound</button>
+            <div id="progressBar" class="h-2 bg-gray-500 mt-2" style="width: 0;"></div>
         </div>
     
       
@@ -79,21 +80,22 @@ function startGame(){
 // Define the functions
 function validateWordInput() {
   
-
+    const progressBar = document.getElementById("progressBar");
+    progressBar.style.width = "0";
 
     const text_input_element = document.getElementById("text_input");
     const text_input_lowercase = text_input_element.value.toLowerCase();
     console.log(text_input_lowercase);
 
     const submitButtonElement = document.getElementById("submitButton");
-    //submitButtonElement.classList.add("bg-gray-500", "text-white");
+    submitButtonElement.classList.add("bg-gray-500", "text-white", "border-gray-700");
 
 
     // UPDATING SUBMIT BUTTON. 
     setTimeout(function(){
-        submitButtonElement.classList.remove("bg-gray-500", "text-white");
+        submitButtonElement.classList.remove("bg-gray-500", "text-white", "border-gray-700");
         answerOutput.classList.remove();
-    }, 1000);
+    }, 200);
 
      
     const appDivElement = document.getElementById("app");
@@ -108,7 +110,7 @@ function validateWordInput() {
         submitButtonElement.classList.remove("bg-gray-500", "text-white");
         text_input_element.classList.remove("border-green-500");
         answerOutput.textContent = "";
-    }, 1000);
+    }, 1200);
 
 
     // UPDATING OUTPUT - INCORRECT
@@ -121,18 +123,8 @@ function validateWordInput() {
         answerOutput.textContent = "";
         text_input_element.classList.remove("border-red-500");
 
-    }, 1000);
+    }, 1200);
     }
-
-    
-    setTimeout(function(){
-        submitButtonElement.classList.remove("bg-red-500", "m-8");
-        text_input_element.classList.remove("border-red-500");
-        answerOutput.value == "";
-    }, 1000);
-
-
-
 
     randomiseWord();
 }
@@ -141,6 +133,16 @@ function playSound() {
     startGame();
     var audio = document.getElementById("myAudio");
     audio.play();
+}
+
+function updateProgressBar(){
+    const audio = document.getElementById("myAudio");
+    const progressBar = document.getElementById("progressBar");
+    const progress = (audio.currentTime / audio.duration) * 100;
+    progressBar.style.width = `${progress}%`;
+    setTimeout(function(){
+    progress = 100;
+    }, 1000)
 }
 
 const btnElement = document.getElementById("submitButton");
