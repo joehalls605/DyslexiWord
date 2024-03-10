@@ -11,27 +11,26 @@
         <div class="pb-8">
             <h1 class="text-4xl font-bold">Dyslexio</h1>
             <p id="intro-slogan" class="pt-4 text-xl">Let's put your spelling skills to the test with some frequently misspelled words.</p>
+            <button id="startGame" class="text-xl p-2 border-4 w-40" onclick="startGame();">Start Game</button>
         </div>
-   
-        <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
-            <audio id="myAudio" ontimeupdate="updateProgressBar()">
-                <source src="">
-            </audio>
-            <button onclick="playSound()">Play Sound</button>
-            <div id="progressBar" class="h-2 bg-gray-500 mt-2" style="width: 0;"></div>
-        </div>
-    
-      
-        <div>
-            <input type="text" id="text_input" placeholder="Start typing..." value="" class="text-xl border-4 h-20 m-5 p-4">
-        </div>
+        <div class="flex flex-row hidden" id="game">
+            <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
+                <audio id="myAudio" ontimeupdate="updateProgressBar()">
+                    <source src="">
+                </audio>
+                <button onclick="playSound()">Play Sound</button>
+                <div id="progressBar" class="h-2 bg-gray-500" style="width: 0;"></div>
+            </div>
         
-        <div>
-            <button id="submitButton" class="text-xl border-4 w-40 p-4" >Submit</button>
-            <p id="answerOutput" class="text-xl pb-8 w-40 p-4"></p>
+          
+            <div>
+                <input type="text" id="text_input" placeholder="Start typing..." value="" class="text-xl border-4 h-20 ml-3 mr-3">
+            </div>
+            
+            <div>
+                <button id="submitButton" class="text-xl border-4 w-40 pb-6 pt-5" >Submit</button>
+            </div>
         </div>
-    
-     
     </div>
 
     <script>
@@ -56,6 +55,13 @@ let randomWord;
 
 randomiseWord();
 
+function startGame(){
+    const gameElement = document.getElementById("game");
+    gameElement.classList.remove("hidden")
+    const startGameElement = document.getElementById("startGame");
+    startGameElement.classList.add("hidden");
+}
+
 
 function randomiseWord(){
     // Generating a random index
@@ -70,10 +76,10 @@ function randomiseWord(){
     audioElement.setAttribute("src", audioSrc);
 }
 
-function startGame(){
-    const introSloganELement = document.getElementById("intro-slogan")
-    introSloganELement.textContent = "";
-}
+// function startGame(){
+//     const introSloganELement = document.getElementById("intro-slogan")
+//     introSloganELement.textContent = "";
+// }
 
 function validateWordInput() {
   
@@ -137,7 +143,6 @@ function updateProgressBar(){
 }
 
 function playSound() {
-    startGame();
     const playSoundElement = document.getElementById("playSoundButton");
     playSoundElement.classList.add("border-gray-700")
     var audio = document.getElementById("myAudio");
