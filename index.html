@@ -13,9 +13,9 @@
             <p id="intro-slogan" class="pt-4 text-xl">Let's put your spelling skills to the test with some frequently misspelled words.</p>
         </div>
    
-        <div class="text-xl p-2 border-4 w-40">
+        <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
             <audio id="myAudio" ontimeupdate="updateProgressBar()">
-                <source src="./sounds/acceptable.mp3">
+                <source src="">
             </audio>
             <button onclick="playSound()">Play Sound</button>
             <div id="progressBar" class="h-2 bg-gray-500 mt-2" style="width: 0;"></div>
@@ -43,13 +43,12 @@ const wordData = [
     {_id: "3", word: "drunkenness", sound: "./sounds/drunkenness.mp3"},
     {_id: "4", word: "vicious", sound: "./sounds/vicious.mp3"},
     {_id: "5", word: "acquire", sound: "./sounds/acquire.mp3"},
-    {_id: "5", word: "atheist", sound: "./sounds/atheist.mp3"},
-    {_id: "5", word: "exhilarate", sound: "./sounds/exhilarate.mp3"},
-    {_id: "5", word: "mischievous", sound: "./sounds/mischievous.mp3"},
-    {_id: "5", word: "parliament", sound: "./sounds/parliament.mp3"},
-    {_id: "5", word: "noticeable", sound: "./sounds/noticeable.mp3"},
-    {_id: "5", word: "questionnaire", sound: "./sounds/questionnaire.mp3"},
-
+    {_id: "6", word: "atheist", sound: "./sounds/atheist.mp3"},
+    {_id: "7", word: "exhilarate", sound: "./sounds/exhilarate.mp3"},
+    {_id: "8", word: "mischievous", sound: "./sounds/mischievous.mp3"},
+    {_id: "9", word: "parliament", sound: "./sounds/parliament.mp3"},
+    {_id: "10", word: "noticeable", sound: "./sounds/noticeable.mp3"},
+    {_id: "11", word: "questionnaire", sound: "./sounds/questionnaire.mp3"}
 ];
 
 
@@ -76,11 +75,10 @@ function startGame(){
     introSloganELement.textContent = "";
 }
 
-
-// Define the functions
 function validateWordInput() {
   
     const progressBar = document.getElementById("progressBar");
+    const playSoundElement = document.getElementById("playSoundButton");
     progressBar.style.width = "0";
 
     const text_input_element = document.getElementById("text_input");
@@ -88,12 +86,12 @@ function validateWordInput() {
     console.log(text_input_lowercase);
 
     const submitButtonElement = document.getElementById("submitButton");
-    submitButtonElement.classList.add("bg-gray-500", "text-white", "border-gray-700");
+    submitButtonElement.classList.add("border-gray-700");
 
 
     // UPDATING SUBMIT BUTTON. 
     setTimeout(function(){
-        submitButtonElement.classList.remove("bg-gray-500", "text-white", "border-gray-700");
+        submitButtonElement.classList.remove("border-gray-700");
         answerOutput.classList.remove();
     }, 200);
 
@@ -129,20 +127,25 @@ function validateWordInput() {
     randomiseWord();
 }
 
-function playSound() {
-    startGame();
-    var audio = document.getElementById("myAudio");
-    audio.play();
-}
 
 function updateProgressBar(){
     const audio = document.getElementById("myAudio");
     const progressBar = document.getElementById("progressBar");
-    const progress = (audio.currentTime / audio.duration) * 100;
+    const audioDuration = audio.duration;
+    const progress = (audio.currentTime / audioDuration) * 100;
     progressBar.style.width = `${progress}%`;
+}
+
+function playSound() {
+    startGame();
+    const playSoundElement = document.getElementById("playSoundButton");
+    playSoundElement.classList.add("border-gray-700")
+    var audio = document.getElementById("myAudio");
+    audio.play();
     setTimeout(function(){
-    progress = 100;
-    }, 1000)
+        playSoundElement.classList.remove("border-gray-700")
+    }, audio.duration);
+
 }
 
 const btnElement = document.getElementById("submitButton");
