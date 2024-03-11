@@ -9,12 +9,12 @@
 <body>
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
         <div id="header">
-            <h1 class="text-4xl font-bold ">Dyslexio</h1>
+            <h1 class="text-4xl font-bold border-1">Dyslexio</h1>
             <p id="intro-slogan" class="pt-4 text-xl mt-8">Let's put your spelling skills to the test with some frequently misspelled words.</p>
             <button id="startGame" class="text-xl p-2 border-4 w-40 mt-7 " onclick="startGame();">Start Game</button>
         </div>
         <div id="hint-section mt-10">
-            <p id="word-hint" class="pt-4 text-2xl hidden mt-8 bg-blue-100 p-6"></p>
+            <p id="word-hint" class="pt-4 text-2xl hidden mt-8 bg-blue-100 p-8"></p>
         </div>
         <div class="flex flex-row hidden mt-7" id="game"> <!-- Adjusted margin-top from mt-15 to mt-8 -->
             <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
@@ -35,9 +35,9 @@
             </div>
         
         </div>
-        <div>
-            <p id="scoreHeader"class="hidden">Score:</p>
-            <p class="flex flex-row mt-5 " id="score"></p>
+        <div id="scoreSection"class="bg-gray-200 mt-6 pr-5 pl-5 pb-4 flex flex-row justify-center hidden">
+            <p id="scoreHeader" class="mt-5 mr-1">Score:</p>
+            <p id="score" class="mt-5"></p>
         </div>
     </div>
 
@@ -73,6 +73,8 @@ function startGame(){
     introSloganELement.classList.add("hidden");
     const wordHintElement = document.getElementById("word-hint");
     wordHintElement.classList.remove("hidden");
+    const scoreSection = document.getElementById("scoreSection");
+    scoreSection.classList.remove("hidden");
 }
 
 
@@ -106,7 +108,7 @@ function validateWordInput() {
     const text_input_lowercase = text_input_element.value.toLowerCase();
 
     const submitButtonElement = document.getElementById("submitButton");
-    submitButtonElement.classList.add("border-gray-700");
+    submitButtonElement.classList.add("border-gray-500");
 
     const appDivElement = document.getElementById("app");
     const answerOutput = document.getElementById("answerOutput");
@@ -118,8 +120,8 @@ function validateWordInput() {
 
     // UPDATING SUBMIT BUTTON. 
     setTimeout(function(){
-        submitButtonElement.classList.remove("border-gray-700");
-    }, 200);
+        submitButtonElement.classList.remove("border-gray-500");
+    }, 100);
 
     
     // UPDATING OUTPUT - CORRECT
@@ -130,7 +132,7 @@ function validateWordInput() {
     text_input_element.placeholder = "Enter a word..."; 
     score ++;
     scoreElement.textContent = score;
-    scoreHeaderElement.classList.remove("hidden");
+    // scoreHeaderElement.classList.remove("hidden");
 
 
     setTimeout(function(){
