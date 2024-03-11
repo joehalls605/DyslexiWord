@@ -15,6 +15,7 @@
         </div>
         <div id="hint-section mt-10">
             <p id="word-hint" class="pt-4 text-2xl hidden mt-8 bg-blue-100 p-6"></p>
+            <p id="score"></p>
         </div>
         <div class="flex flex-row hidden mt-7" id="game"> <!-- Adjusted margin-top from mt-15 to mt-8 -->
             <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
@@ -55,6 +56,7 @@ const wordData = [
 
 
 let randomWord;
+let score = 0;
 
 randomiseWord();
 
@@ -105,6 +107,8 @@ function validateWordInput() {
     const appDivElement = document.getElementById("app");
     const answerOutput = document.getElementById("answerOutput");
 
+    const scoreElement = document.getElementById("score");
+
 
     // UPDATING SUBMIT BUTTON. 
     setTimeout(function(){
@@ -118,6 +122,8 @@ function validateWordInput() {
     text_input_element.classList.add("border-green-500");
     text_input_element.value = "";
     text_input_element.placeholder = "Enter a word..."; 
+    score ++;
+    scoreElement.textContent = score;
 
     setTimeout(function(){
         submitButtonElement.classList.remove("bg-gray-500", "text-white");
@@ -139,6 +145,10 @@ function validateWordInput() {
     }
 
     randomiseWord();
+}
+
+function displayScore(){
+    return score;
 }
 
 
