@@ -10,10 +10,11 @@
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
         <div class="pb-8">
             <h1 class="text-4xl font-bold">Dyslexio</h1>
-            <p id="intro-slogan" class="pt-4 text-xl mt-5">Let's put your spelling skills to the test with some frequently misspelled words.</p>
+            <p id="intro-slogan" class="pt-4 text-xl mt-8">Let's put your spelling skills to the test with some frequently misspelled words.</p>
+            <p id="word-hint" class="pt-4 text-2xl mt-5 hidden mt-8"></p>
             <button id="startGame" class="text-xl p-2 border-4 w-40 mt-7" onclick="startGame();">Start Game</button>
         </div>
-        <div class="flex flex-row hidden" id="game">
+        <div class="flex flex-row hidden mt-8" id="game">
             <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
                 <audio id="myAudio" ontimeupdate="updateProgressBar()">
                     <source src="">
@@ -62,6 +63,8 @@ function startGame(){
     startGameElement.classList.add("hidden");
     const introSloganELement = document.getElementById("intro-slogan");
     introSloganELement.classList.add("hidden");
+    const wordHintElement = document.getElementById("word-hint");
+    wordHintElement.classList.remove("hidden");
 }
 
 
@@ -71,19 +74,21 @@ function randomiseWord(){
 
     // Retrieving a random word from the wordData array using the random index
     randomWord = wordData[randomIndex].word;
-
+    
     const audioSrc = `./sounds/${randomWord}.mp3`;
     console.log(randomWord);
     const audioElement = document.getElementById("myAudio");
     audioElement.setAttribute("src", audioSrc);
+
+    const wordHintElement = document.getElementById("word-hint");
+    
+    const hintString = randomWord.charAt(0) + "_".repeat(randomWord.length -1);
+    wordHintElement.textContent = hintString;
+ 
 }
 
-// function startGame(){
-//     const introSloganELement = document.getElementById("intro-slogan")
-//     introSloganELement.textContent = "";
-// }
 
-function validateWordInput() {
+function validateWordInput(randomWord) {
   
     const progressBar = document.getElementById("progressBar");
     const playSoundElement = document.getElementById("playSoundButton");
@@ -95,6 +100,7 @@ function validateWordInput() {
 
     const submitButtonElement = document.getElementById("submitButton");
     submitButtonElement.classList.add("border-gray-700");
+
 
 
     // UPDATING SUBMIT BUTTON. 
