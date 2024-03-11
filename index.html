@@ -31,7 +31,7 @@
             </div>
             
             <div>
-                <button id="submitButton" class="text-xl border-4 w-40 pb-6 pt-5" >Submit</button>
+                <button id="submitButton" class="text-xl border-4 w-40 pb-6 pt-5" onclick="validateWordInput()">Submit</button>
             </div>
         </div>
     </div>
@@ -90,7 +90,7 @@ function randomiseWord(){
 }
 
 
-function validateWordInput(randomWord) {
+function validateWordInput() {
   
     const progressBar = document.getElementById("progressBar");
     const playSoundElement = document.getElementById("playSoundButton");
@@ -98,32 +98,30 @@ function validateWordInput(randomWord) {
 
     const text_input_element = document.getElementById("text_input");
     const text_input_lowercase = text_input_element.value.toLowerCase();
-    console.log(text_input_lowercase);
 
     const submitButtonElement = document.getElementById("submitButton");
     submitButtonElement.classList.add("border-gray-700");
 
+    const appDivElement = document.getElementById("app");
+    const answerOutput = document.getElementById("answerOutput");
 
 
     // UPDATING SUBMIT BUTTON. 
     setTimeout(function(){
         submitButtonElement.classList.remove("border-gray-700");
-        answerOutput.classList.remove();
     }, 200);
 
-     
-    const appDivElement = document.getElementById("app");
-    const answerOutput = document.getElementById("answerOutput");
     
     // UPDATING OUTPUT - CORRECT
 
     if(text_input_lowercase === randomWord){
     text_input_element.classList.add("border-green-500");
+    text_input_element.value = "";
+    text_input_element.placeholder = "Enter a word..."; 
 
     setTimeout(function(){
         submitButtonElement.classList.remove("bg-gray-500", "text-white");
         text_input_element.classList.remove("border-green-500");
-        answerOutput.textContent = "";
     }, 1200);
 
 
@@ -132,11 +130,11 @@ function validateWordInput(randomWord) {
     }
     else{
     text_input_element.classList.add("border-red-500");
+    text_input_element.value = "";
+    text_input_element.placeholder = "Enter a word..."; 
 
     setTimeout(function(){
-        answerOutput.textContent = "";
         text_input_element.classList.remove("border-red-500");
-
     }, 1200);
     }
 
