@@ -69,8 +69,9 @@ const wordData = [
 ];
 
 
-let randomWord;
 let score = 0;
+let completedWords = [];
+let randomWord;
 
 randomiseWord();
 
@@ -87,14 +88,30 @@ function startGame(){
     scoreSection.classList.remove("hidden");
 }
 
+function endGame(){
 
-function randomiseWord(){
+}
+
+
+function randomiseWord() {
+  let wordNotFound = true;
+
+
+  while (wordNotFound) {
     // Generating a random index
     const randomIndex = Math.floor(Math.random() * wordData.length);
 
     // Retrieving a random word from the wordData array using the random index
     randomWord = wordData[randomIndex].word;
-    
+
+    // Checking if the word is in the completedWords array
+    if (!completedWords.includes(randomWord)) { // if random word is not in completed words
+      wordNotFound = false;
+      completedWords.push(randomWord);
+    }
+    console.log(completedWords)
+  }
+
     const audioSrc = `./sounds/${randomWord}.mp3`;
     console.log(randomWord);
     const audioElement = document.getElementById("myAudio");
