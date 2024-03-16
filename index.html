@@ -73,9 +73,11 @@ let score = 0;
 let completedWords = [];
 let randomWord;
 
-randomiseWord();
+
 
 function startGame(){
+
+    randomiseWord();
     const gameElement = document.getElementById("game");
     gameElement.classList.remove("hidden")
     const startGameElement = document.getElementById("startGame");
@@ -89,7 +91,11 @@ function startGame(){
 }
 
 function endGame(){
-
+    const scoreElement = document.createElement("div");
+    scoreElement.classList.add("bg-blue-100", "mt-6", "pr-5", "pl-5", "pb-4", "flex", "flex-row", "justify-center");
+    scoreElement.textContent = "GAME OVER";
+    const appElement = document.getElementById("app");
+    appElement.append(scoreElement);
 }
 
 
@@ -118,7 +124,7 @@ function randomiseWord() {
     audioElement.setAttribute("src", audioSrc);
 
     const wordHintElement = document.getElementById("word-hint");
-    
+     
     const hintString = randomWord.charAt(0) + "_".repeat(randomWord.length -1);
     wordHintElement.textContent = hintString;
  
@@ -153,6 +159,7 @@ function validateWordInput() {
     
     // UPDATING OUTPUT - CORRECT
 
+    
     if(text_input_lowercase === randomWord){
     text_input_element.classList.add("border-green-500");
     text_input_element.value = "";
@@ -181,8 +188,16 @@ function validateWordInput() {
     }, 1200);
     }
 
-    randomiseWord();
+    if(score > 2){
+        endGame();
+    }
+    else{
+        randomiseWord();
+    }
+
 }
+    
+    
 
 function displayScore(){
     return score;
