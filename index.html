@@ -8,8 +8,8 @@
 </head>
 <body>
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
+        <h1 class="text-4xl font-bold border-1">Dyslexio</h1>
         <div id="header">
-            <h1 class="text-4xl font-bold border-1">Dyslexio</h1>
             <p id="intro-slogan" class="pt-4 text-xl mt-8">Let's put your spelling skills to the test with some frequently misspelled words.</p>
             <button id="startGame" class="text-xl p-2 border-4 w-40 mt-7 " onclick="startGame();">Start Game</button>
         </div>
@@ -105,10 +105,19 @@ function endGame() {
             scoreSection.parentNode.removeChild(scoreSection);
         }
 
+        const hintElement = document.getElementById("word-hint");
+        hintElement.remove();
+
         // Create and append the "GAME OVER" message
         const scoreElement = document.createElement("div");
-        scoreElement.classList.add("bg-blue-100", "mt-6", "pr-5", "pl-5", "pb-4", "flex", "flex-row", "justify-center");
-        scoreElement.textContent = "GAME OVER";
+        scoreElement.classList.add("pr-5", "pl-5", "pb-4", "flex", "flex-row", "justify-center");
+        scoreElement.innerHTML = `<div>
+            <p class="text-2xl mt-10">Game Over</p>
+            <br>
+            <p class="text-2xl mt-2">Score:</p>
+            <p class="text-4xl mt-4 rounded-full bg-blue-200 w-32 h-32 flex items-center justify-center">${score}</p>
+            </div>
+        `
         const appElement = document.getElementById("app");
         if (appElement) {
             appElement.append(scoreElement);
@@ -204,8 +213,8 @@ function validateWordInput() {
         }
 
         // Check the score and call randomiseWord or endGame after word validation
-        
-        if (score <= 2 && !gameEnded) {
+
+        if (score <= 0 && !gameEnded) {
             randomiseWord();
         } else if (!gameEnded) {
             endGame();
