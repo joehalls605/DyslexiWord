@@ -72,7 +72,7 @@ const wordData = [
 let score = 0;
 let completedWords = [];
 let randomWord;
-
+let gameEnded = false; // Flag to track if the game has ended
 
 
 function startGame(){
@@ -90,12 +90,30 @@ function startGame(){
     scoreSection.classList.remove("hidden");
 }
 
-function endGame(){
-    const scoreElement = document.createElement("div");
-    scoreElement.classList.add("bg-blue-100", "mt-6", "pr-5", "pl-5", "pb-4", "flex", "flex-row", "justify-center");
-    scoreElement.textContent = "GAME OVER";
-    const appElement = document.getElementById("app");
-    appElement.append(scoreElement);
+function endGame() {
+    if (!gameEnded) { // Check if the game has already ended
+        gameEnded = true; // Set the flag to true
+
+        // Remove the existing game elements
+        const gameElement = document.getElementById("game");
+        if (gameElement && gameElement.parentNode) {
+            gameElement.parentNode.removeChild(gameElement);
+        }
+
+        const scoreSection = document.getElementById("scoreSection");
+        if (scoreSection && scoreSection.parentNode) {
+            scoreSection.parentNode.removeChild(scoreSection);
+        }
+
+        // Create and append the "GAME OVER" message
+        const scoreElement = document.createElement("div");
+        scoreElement.classList.add("bg-blue-100", "mt-6", "pr-5", "pl-5", "pb-4", "flex", "flex-row", "justify-center");
+        scoreElement.textContent = "GAME OVER";
+        const appElement = document.getElementById("app");
+        if (appElement) {
+            appElement.append(scoreElement);
+        }
+    }
 }
 
 
@@ -115,7 +133,6 @@ function randomiseWord() {
       wordNotFound = false;
       completedWords.push(randomWord);
     }
-    console.log(completedWords)
   }
 
     const audioSrc = `./sounds/${randomWord}.mp3`;
@@ -130,71 +147,70 @@ function randomiseWord() {
  
 }
 
-
 function validateWordInput() {
-  
-    const progressBar = document.getElementById("progressBar");
+    const progressBarElement = document.getElementById("progressBar");
+    if (progressBarElement) {
+        progressBarElement.style.width = "0";
+    }
+
     const playSoundElement = document.getElementById("playSoundButton");
-    progressBar.style.width = "0";
 
     const text_input_element = document.getElementById("text_input");
-    const text_input_lowercase = text_input_element.value.toLowerCase();
+    if (text_input_element) {
+        const text_input_lowercase = text_input_element.value.toLowerCase();
 
-    const submitButtonElement = document.getElementById("submitButton");
-    submitButtonElement.classList.add("border-gray-500");
+        const submitButtonElement = document.getElementById("submitButton");
+        if (submitButtonElement) {
+            submitButtonElement.classList.add("border-gray-500");
 
-    const appDivElement = document.getElementById("app");
-    const answerOutput = document.getElementById("answerOutput");
+            // UPDATING SUBMIT BUTTON.
+            setTimeout(function () {
+                submitButtonElement.classList.remove("border-gray-500");
+            }, 100);
+        }
 
-    const scoreElement = document.getElementById("score");
-    const scoreHeaderElement  = document.getElementById("scoreHeader");
+        const appDivElement = document.getElementById("app");
+        const answerOutput = document.getElementById("answerOutput");
 
+        const scoreElement = document.getElementById("score");
+        const scoreHeaderElement = document.getElementById("scoreHeader");
 
+        // UPDATING OUTPUT - CORRECT
+        if (text_input_lowercase === randomWord) {
+            text_input_element.classList.add("border-green-500");
+            text_input_element.value = "";
+            text_input_element.placeholder = "Enter a word...";
+            score++;
+            if (scoreElement) {
+                scoreElement.textContent = score;
+            }
 
-    // UPDATING SUBMIT BUTTON. 
-    setTimeout(function(){
-        submitButtonElement.classList.remove("border-gray-500");
-    }, 100);
+            setTimeout(function () {
+                if (submitButtonElement) {
+                    submitButtonElement.classList.remove("bg-gray-500", "text-white");
+                }
+                text_input_element.classList.remove("border-green-500");
+            }, 1200);
 
-    
-    // UPDATING OUTPUT - CORRECT
+            // UPDATING OUTPUT - INCORRECT
+        } else {
+            text_input_element.classList.add("border-red-500");
+            text_input_element.value = "";
+            text_input_element.placeholder = "Enter a word...";
 
-    
-    if(text_input_lowercase === randomWord){
-    text_input_element.classList.add("border-green-500");
-    text_input_element.value = "";
-    text_input_element.placeholder = "Enter a word..."; 
-    score ++;
-    scoreElement.textContent = score;
-    // scoreHeaderElement.classList.remove("hidden");
+            setTimeout(function () {
+                text_input_element.classList.remove("border-red-500");
+            }, 1200);
+        }
 
-
-    setTimeout(function(){
-        submitButtonElement.classList.remove("bg-gray-500", "text-white");
-        text_input_element.classList.remove("border-green-500");
-    }, 1200);
-
-
-    // UPDATING OUTPUT - INCORRECT
-
+        // Check the score and call randomiseWord or endGame after word validation
+        
+        if (score <= 2 && !gameEnded) {
+            randomiseWord();
+        } else if (!gameEnded) {
+            endGame();
+        }
     }
-    else{
-    text_input_element.classList.add("border-red-500");
-    text_input_element.value = "";
-    text_input_element.placeholder = "Enter a word..."; 
-
-    setTimeout(function(){
-        text_input_element.classList.remove("border-red-500");
-    }, 1200);
-    }
-
-    if(score > 2){
-        endGame();
-    }
-    else{
-        randomiseWord();
-    }
-
 }
     
     
@@ -207,25 +223,33 @@ function displayScore(){
 function updateProgressBar(){
     const audio = document.getElementById("myAudio");
     const progressBar = document.getElementById("progressBar");
-    const audioDuration = audio.duration;
-    const progress = (audio.currentTime / audioDuration) * 100;
-    progressBar.style.width = `${progress}%`;
+    if (audio && progressBar) {
+        const audioDuration = audio.duration;
+        const progress = (audio.currentTime / audioDuration) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
 }
 
 function playSound() {
     const playSoundElement = document.getElementById("playSoundButton");
-    playSoundElement.classList.add("border-gray-700")
+    if (playSoundElement) {
+        playSoundElement.classList.add("border-gray-700")
+    }
     var audio = document.getElementById("myAudio");
-    audio.play();
-    setTimeout(function(){
-        playSoundElement.classList.remove("border-gray-700")
-    }, audio.duration);
-
+    if (audio) {
+        audio.play();
+        setTimeout(function(){
+            if (playSoundElement) {
+                playSoundElement.classList.remove("border-gray-700")
+            }
+        }, audio.duration);
+    }
 }
 
 const btnElement = document.getElementById("submitButton");
-btnElement.addEventListener("click", validateWordInput);
-
+if (btnElement) {
+    btnElement.addEventListener("click", validateWordInput);
+}
 
     </script>
 </body>
