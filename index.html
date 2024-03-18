@@ -8,9 +8,10 @@
 </head>
 <body>
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
-        <h1 class="text-4xl font-bold border-1 mb-8">Dyslexio</h1> <!-- Add mb-8 class -->
+        <h1 class="text-4xl font-bold border-1 mb-4">Dyslexio</h1>
+        <p id="intro-bio" class="pt-4 text-xl mt-1">Master spellings of the most challenging words for dyslexia</p>
         <div id="header">
-            <p id="intro-slogan" class="pt-4 text-xl mt-8">Let's put your spelling skills to the test with some frequently misspelled words.</p>
+            <p id="intro-text" class="pt-4 text-2xl mt-8">Click start when you're ready to begin</p>
             <button id="startGame" class="text-xl p-2 border-4 w-40 mt-7" onclick="startGame();">Start Game</button>
         </div>
         <div id="hint-section" class="mt-10">
@@ -86,8 +87,10 @@ function startGame(){
     gameElement.classList.remove("hidden")
     const startGameElement = document.getElementById("startGame");
     startGameElement.classList.add("hidden");
-    const introSloganELement = document.getElementById("intro-slogan");
-    introSloganELement.classList.add("hidden");
+    const introBioELement = document.getElementById("intro-bio");
+    introBioELement.remove();
+    const introTextElement = document.getElementById("intro-text");
+    introTextElement.remove();
     const wordHintElement = document.getElementById("word-hint");
     wordHintElement.classList.remove("hidden");
     const scoreSection = document.getElementById("scoreSection");
