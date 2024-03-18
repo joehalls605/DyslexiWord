@@ -9,13 +9,14 @@
 <body>
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
         <h1 class="text-4xl font-bold border-1 mb-4">Dyslexio</h1>
-        <p id="intro-bio" class="pt-4 text-xl mt-1">Master spellings of the most challenging words for dyslexia</p>
+        <p id="intro-bio" class="pt-4 text-xl mt-1">It's time to conquer dyslexia by typing the most challenging words</p>
         <div id="header">
-            <p id="intro-text" class="pt-4 text-2xl mt-8">Click start when you're ready to begin</p>
-            <button id="startGame" class="text-xl p-2 border-4 w-40 mt-7" onclick="startGame();">Start Game</button>
+            <p id="intro-text" class="pt-4 text-2xl mt-2">Click <button id="startGame" class="text-xl p-2 border-4 w-35 mt-5" onclick="startGame();">Start Game</button>  when you're ready to begin!</p>
+            
+            <img id="dyslexiaImage" class="mt-5" src="./images/dyslexia.png">
         </div>
         <div id="hint-section" class="mt-10">
-            <p id="word-hint" class="pt-4 text-2xl hidden bg-blue-100 p-8"></p>
+            <p id="word-hint" style="background-color: #c7f5e3" class="pt-4 text-2xl hidden p-8"></p>
         </div>
         <div class="flex flex-row hidden mt-7" id="game">
             <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
@@ -24,7 +25,7 @@
                 </audio>
                 <div onclick="playSound()">
                     <button  class="pt-2">Play Sound</button>
-                    <div id="progressBar" class="h-2 bg-blue-100 mt-1" style="width: 0;"></div>
+                    <div id="progressBar" style="background-color: #c7f5e3 ;" class="h-2 mt-1" style="width: 0;"></div>
                 </div>
                
             </div>
@@ -79,10 +80,16 @@ let completedWords = [];
 let randomWord;
 let gameEnded = false; // Flag to track if the game has ended
 
+// Colours
+
+const buttonColour = "#7CCEB6"
+
 
 function startGame(){
 
     randomiseWord();
+    const dyslexiaImageElement = document.getElementById("dyslexiaImage");
+    dyslexiaImageElement.remove();
     const gameElement = document.getElementById("game");
     gameElement.classList.remove("hidden")
     const startGameElement = document.getElementById("startGame");
@@ -95,6 +102,8 @@ function startGame(){
     wordHintElement.classList.remove("hidden");
     const scoreSection = document.getElementById("scoreSection");
     scoreSection.classList.remove("hidden");
+    
+
 }
 
 
@@ -124,13 +133,16 @@ function endGame() {
 function EndGameColour(){
         let scoreColour = "";
         if(score > 7){
-        scoreColour = "bg-green-700"
+        scoreColour = "bg-green-700";
+        scoreResponse = "Brilliant job!";
         }
         else if(score >= 4){
         scoreColour = "bg-yellow-400"
+        scoreResponse = "Solid score!";
         }
         else if(score <= 4){
-        scoreColour = "bg-red-300"
+        scoreColour = "bg-red-300";
+        scoreResponse = "Practice makes perfect!";
         }
 
         // Create and append the "GAME OVER" message
@@ -138,10 +150,11 @@ function EndGameColour(){
         scoreElement.classList.add("pr-5", "pl-5", "pb-4", "flex", "flex-row", "justify-center");
         scoreElement.innerHTML = `
     <div id="gameOver" class="flex flex-col items-center">
-        <p class="text-3xl mt-10">Game Over</p>
-        <p class="text-2xl mt-4">Score:</p>
-        <p class="text-4xl mt-3 rounded-full ${scoreColour} w-36 h-36 flex items-center justify-center">${score} / 10</p>
-        <p class="text-1xl mt-4">Refresh the page to try again</p>
+        <p class="text-3xl mt-5">Game Over</p>
+        <p class="text-2xl mt-4">You scored:</p>
+        <p class="text-4xl mt-5 rounded-full ${scoreColour} w-36 h-36 flex items-center justify-center">${score} / 10</p>
+        <p class="text-2xl mt-5">${scoreResponse}</p>
+        <p class="text-1xl mt-5">Refresh the page to restart the game</p>
     </div>
 `;
         const appElement = document.getElementById("app");
