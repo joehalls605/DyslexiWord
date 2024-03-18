@@ -8,21 +8,24 @@
 </head>
 <body>
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
-        <h1 class="text-4xl font-bold border-1">Dyslexio</h1>
+        <h1 class="text-4xl font-bold border-1 mb-8">Dyslexio</h1> <!-- Add mb-8 class -->
         <div id="header">
             <p id="intro-slogan" class="pt-4 text-xl mt-8">Let's put your spelling skills to the test with some frequently misspelled words.</p>
             <button id="startGame" class="text-xl p-2 border-4 w-40 mt-7" onclick="startGame();">Start Game</button>
         </div>
-        <div id="hint-section mt-10">
-            <p id="word-hint" class="pt-4 text-2xl hidden mt-8 bg-blue-100 p-8"></p>
+        <div id="hint-section" class="mt-10">
+            <p id="word-hint" class="pt-4 text-2xl hidden bg-blue-100 p-8"></p>
         </div>
-        <div class="flex flex-row hidden mt-7" id="game"> <!-- Adjusted margin-top from mt-15 to mt-8 -->
+        <div class="flex flex-row hidden mt-7" id="game">
             <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
                 <audio id="myAudio" ontimeupdate="updateProgressBar()">
                     <source src="">
                 </audio>
-                <button onclick="playSound()" class="pt-2">Play Sound</button>
-                <div id="progressBar" class="h-2 bg-blue-100 mt-1" style="width: 0;"></div>
+                <div onclick="playSound()">
+                    <button  class="pt-2">Play Sound</button>
+                    <div id="progressBar" class="h-2 bg-blue-100 mt-1" style="width: 0;"></div>
+                </div>
+               
             </div>
         
           
@@ -35,10 +38,10 @@
             </div>
         
         </div>
-        <div id="scoreSection"class="bg-blue-100 mt-6 pr-5 pl-5 pb-4 flex flex-row justify-center hidden">
+        <!-- <div id="scoreSection"class="bg-blue-100 mt-6 pr-5 pl-5 pb-4 flex flex-row justify-center hidden">
             <p id="scoreHeader" class="mt-5 mr-2 text-xl">Score:</p>
             <p id="score" class="mt-5 mr-2 text-xl"></p>
-        </div>
+        </div> -->
     </div>
 
     <script>
@@ -200,7 +203,7 @@ function randomiseWord() {
    
     const wordHintElement = document.getElementById("word-hint");
     if(wordHintElement){
-     const hintString = randomWord.charAt(0) + "_".repeat(randomWord.length -1);
+     const hintString = randomWord.charAt(0) + " _ ".repeat(randomWord.length -1);
     wordHintElement.textContent = hintString;
         
     }
@@ -275,6 +278,15 @@ function validateWordInput() {
             endGame();
         }
     }
+}
+
+const textInputElement = document.getElementById("text_input");
+if(textInputElement){
+    textInputElement.addEventListener("keydown", function(event){
+        if(event.key === "Enter"){
+            validateWordInput();
+        }
+    });
 }
     
     
