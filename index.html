@@ -11,7 +11,7 @@
         <h1 class="text-4xl font-bold border-1">Dyslexio</h1>
         <div id="header">
             <p id="intro-slogan" class="pt-4 text-xl mt-8">Let's put your spelling skills to the test with some frequently misspelled words.</p>
-            <button id="startGame" class="text-xl p-2 border-4 w-40 mt-7 " onclick="startGame();">Start Game</button>
+            <button id="startGame" class="text-xl p-2 border-4 w-40 mt-7" onclick="startGame();">Start Game</button>
         </div>
         <div id="hint-section mt-10">
             <p id="word-hint" class="pt-4 text-2xl hidden mt-8 bg-blue-100 p-8"></p>
@@ -111,19 +111,44 @@ function endGame() {
         // Create and append the "GAME OVER" message
         const scoreElement = document.createElement("div");
         scoreElement.classList.add("pr-5", "pl-5", "pb-4", "flex", "flex-row", "justify-center");
-        scoreElement.innerHTML = `<div>
-            <p class="text-2xl mt-10">Game Over</p>
-            <br>
-            <p class="text-2xl mt-2">Score:</p>
-            <p class="text-4xl mt-4 rounded-full bg-blue-200 w-32 h-32 flex items-center justify-center">${score}</p>
-            </div>
-        `
+        scoreElement.innerHTML = `
+    <div id="gameOver" class="flex flex-col items-center">
+        <p class="text-3xl mt-10">Game Over</p>
+        <p class="text-2xl mt-4">Score:</p>
+        <p class="text-4xl mt-3 rounded-full bg-blue-200 w-36 h-36 flex items-center justify-center">${score} / 10</p>
+        <p class="text-1xl mt-4">Refresh the page to try again</p>
+    </div>
+`;
         const appElement = document.getElementById("app");
         if (appElement) {
             appElement.append(scoreElement);
         }
     }
 }
+
+function resetApp(){
+    score = 0;
+    completedWords = [];
+    gameEnded = false;
+
+    const startGameElement = document.getElementById("startGame");
+    startGameElement.classList.remove("hidden");
+
+    const introSloganELement = document.getElementById("intro-slogan");
+    introSloganELement.classList.remove("hidden");
+
+    const scoreElement = document.getElementById("scoreSection");
+    if (scoreElement) {
+        scoreElement.remove();
+    }
+
+    const gameOverElement = document.getElementById("gameOver");
+    if (gameOverElement && gameOverElement.parentNode) { // this checks if gameOverElement exists and if it has a parent node to remove from.
+        gameOverElement.parentNode.removeChild(gameOverElement);
+    }
+}
+
+
 
 
 function randomiseWord() {
@@ -147,12 +172,19 @@ function randomiseWord() {
     const audioSrc = `./sounds/${randomWord}.mp3`;
     console.log(randomWord);
     const audioElement = document.getElementById("myAudio");
+    if(audioElement){
     audioElement.setAttribute("src", audioSrc);
+    }
 
+   
     const wordHintElement = document.getElementById("word-hint");
-     
-    const hintString = randomWord.charAt(0) + "_".repeat(randomWord.length -1);
+    if(wordHintElement){
+     const hintString = randomWord.charAt(0) + "_".repeat(randomWord.length -1);
     wordHintElement.textContent = hintString;
+        
+    }
+     
+
  
 }
 
@@ -214,7 +246,7 @@ function validateWordInput() {
 
         // Check the score and call randomiseWord or endGame after word validation
 
-        if (score <= 0 && !gameEnded) {
+        if (score < 0 && !gameEnded) {
             randomiseWord();
         } else if (!gameEnded) {
             endGame();
