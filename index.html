@@ -70,6 +70,7 @@ const wordData = [
 
 
 let score = 0;
+let question = 0;
 let completedWords = [];
 let randomWord;
 let gameEnded = false; // Flag to track if the game has ended
@@ -90,6 +91,8 @@ function startGame(){
     scoreSection.classList.remove("hidden");
 }
 
+
+
 function endGame() {
     if (!gameEnded) { // Check if the game has already ended
         gameEnded = true; // Set the flag to true
@@ -107,6 +110,22 @@ function endGame() {
 
         const hintElement = document.getElementById("word-hint");
         hintElement.remove();
+        EndGameColour();
+
+       
+}
+
+function EndGameColour(){
+        let scoreColour = "";
+        if(score > 7){
+        scoreColour = "bg-green-700"
+        }
+        else if(score >= 4){
+        scoreColour = "bg-yellow-400"
+        }
+        else if(score <= 4){
+        scoreColour = "bg-red-300"
+        }
 
         // Create and append the "GAME OVER" message
         const scoreElement = document.createElement("div");
@@ -115,7 +134,7 @@ function endGame() {
     <div id="gameOver" class="flex flex-col items-center">
         <p class="text-3xl mt-10">Game Over</p>
         <p class="text-2xl mt-4">Score:</p>
-        <p class="text-4xl mt-3 rounded-full bg-blue-200 w-36 h-36 flex items-center justify-center">${score} / 10</p>
+        <p class="text-4xl mt-3 rounded-full ${scoreColour} w-36 h-36 flex items-center justify-center">${score} / 10</p>
         <p class="text-1xl mt-4">Refresh the page to try again</p>
     </div>
 `;
@@ -125,6 +144,8 @@ function endGame() {
         }
     }
 }
+
+
 
 function resetApp(){
     score = 0;
@@ -216,6 +237,8 @@ function validateWordInput() {
         const scoreElement = document.getElementById("score");
         const scoreHeaderElement = document.getElementById("scoreHeader");
 
+        question ++;
+
         // UPDATING OUTPUT - CORRECT
         if (text_input_lowercase === randomWord) {
             text_input_element.classList.add("border-green-500");
@@ -246,7 +269,7 @@ function validateWordInput() {
 
         // Check the score and call randomiseWord or endGame after word validation
 
-        if (score < 0 && !gameEnded) {
+        if (question < 10 && !gameEnded) {
             randomiseWord();
         } else if (!gameEnded) {
             endGame();
