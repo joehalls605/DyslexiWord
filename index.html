@@ -15,16 +15,16 @@
             
             <img id="dyslexiaImage" class="mt-5" src="./images/dyslexia.png">
         </div>
-        <div id="hint-section" class="mt-10">
+        <div id="hint-section" class="mt-12">
             <p id="word-hint" style="background-color: #c7f5e3" class="pt-4 text-2xl hidden p-8"></p>
         </div>
-        <div class="flex flex-row hidden mt-7" id="game">
+        <div class="flex flex-row hidden mt-10" id="game">
             <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
                 <audio id="myAudio" ontimeupdate="updateProgressBar()">
                     <source src="">
                 </audio>
                 <div onclick="playSound()">
-                    <button  class="pt-2">Play Sound</button>
+                    <button  class="pt-2">Play Audio</button>
                     <div id="progressBar" style="background-color: #c7f5e3 ;" class="h-2 mt-1" style="width: 0;"></div>
                 </div>
                
@@ -88,6 +88,7 @@ const buttonColour = "#7CCEB6"
 function startGame(){
 
     randomiseWord();
+    console.log("randomiseWord() start game");
     const dyslexiaImageElement = document.getElementById("dyslexiaImage");
     dyslexiaImageElement.remove();
     const gameElement = document.getElementById("game");
@@ -101,8 +102,6 @@ function startGame(){
     const wordHintElement = document.getElementById("word-hint");
     wordHintElement.classList.remove("hidden");
     const scoreSection = document.getElementById("scoreSection");
-    scoreSection.classList.remove("hidden");
-    
 
 }
 
@@ -133,7 +132,7 @@ function endGame() {
 function EndGameColour(){
         let scoreColour = "";
         if(score > 7){
-        scoreColour = "bg-green-700";
+        scoreColour = "bg-green-600";
         scoreResponse = "Brilliant job!";
         }
         else if(score >= 4){
@@ -141,7 +140,7 @@ function EndGameColour(){
         scoreResponse = "Solid score!";
         }
         else if(score <= 4){
-        scoreColour = "bg-red-300";
+        scoreColour = "bg-red-400";
         scoreResponse = "Practice makes perfect!";
         }
 
@@ -210,7 +209,7 @@ function randomiseWord() {
   }
 
     const audioSrc = `./sounds/${randomWord}.mp3`;
-    console.log(randomWord);
+    console.log("random word = " + randomWord);
     const audioElement = document.getElementById("myAudio");
     if(audioElement){
     audioElement.setAttribute("src", audioSrc);
@@ -229,6 +228,7 @@ function randomiseWord() {
 }
 
 function validateWordInput() {
+    console.log("validateWordInput()")
     const progressBarElement = document.getElementById("progressBar");
     if (progressBarElement) {
         progressBarElement.style.width = "0";
@@ -290,6 +290,7 @@ function validateWordInput() {
 
         if (question < 10 && !gameEnded) {
             randomiseWord();
+            console.log("randomiseWord()");
         } else if (!gameEnded) {
             endGame();
         }
@@ -338,10 +339,10 @@ function playSound() {
     }
 }
 
-const btnElement = document.getElementById("submitButton");
-if (btnElement) {
-    btnElement.addEventListener("click", validateWordInput);
-}
+// const btnElement = document.getElementById("submitButton");
+// if (btnElement) {
+//     btnElement.addEventListener("click", validateWordInput);
+// }
 
     </script>
 </body>
