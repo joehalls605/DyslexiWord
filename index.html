@@ -10,13 +10,19 @@
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center">
         <h1 class="text-4xl font-bold border-1 mb-4">Dyslexio</h1>
         <p id="intro-bio" class="pt-4 text-xl mt-1">It's time to conquer dyslexia by typing the most challenging words</p>
+        <div id="howToPlay" style="background-color: #c7f5e3;" class="p-4 mt-8 rounded">
+            <p class="text-2xl">How to play?</p>
+            <p class="mt-6">1.  Listen to the word audio</p>
+            <p class="mt-6">2.  Glance at the hint text</p>
+            <p class="mt-6 mb-3">3.  Input the word and click submit or press enter on your keyboard.</p>
+        </div>
         <div id="header">
             <p id="intro-text" class="pt-4 text-2xl mt-2">Click <button id="startGame" class="text-xl p-2 border-4 w-35 mt-5" onclick="startGame();">Start Game</button>  when you're ready to begin!</p>
             
             <img id="dyslexiaImage" class="mt-5" src="./images/dyslexia.png">
         </div>
         <div id="hint-section" class="mt-12">
-            <p id="word-hint" style="background-color: #c7f5e3" class="pt-4 text-2xl hidden p-8"></p>
+            <p id="word-hint" style="background-color: #c7f5e3" class="pt-4 text-2xl hidden p-4"></p>
         </div>
         <div class="flex flex-row hidden mt-10" id="game">
             <div id="playSoundButton" class="text-xl p-2 border-4 w-40">
@@ -24,12 +30,11 @@
                     <source src="">
                 </audio>
                 <div onclick="playSound()">
-                    <button  class="pt-2">Play Audio</button>
-                    <div id="progressBar" style="background-color: #c7f5e3 ;" class="h-2 mt-1" style="width: 0;"></div>
+                    <button class="pt-2">Play Audio</button>
+                    <div id="progressBar" style="background-color: #c7f5e3; width: 0;" class="h-2 mt-1 pt-1"></div>
                 </div>
-               
             </div>
-        
+            
           
             <div>
                 <input type="text" id="text_input" placeholder="Start typing..." value="" class="text-xl border-4 h-20 ml-3 mr-3 pl-2 pb-1">
@@ -40,10 +45,6 @@
             </div>
         
         </div>
-        <!-- <div id="scoreSection"class="bg-blue-100 mt-6 pr-5 pl-5 pb-4 flex flex-row justify-center hidden">
-            <p id="scoreHeader" class="mt-5 mr-2 text-xl">Score:</p>
-            <p id="score" class="mt-5 mr-2 text-xl"></p>
-        </div> -->
     </div>
 
     <script>
@@ -87,6 +88,8 @@ const buttonColour = "#7CCEB6"
 
 function startGame(){
 
+    const howToPlay = document.getElementById("howToPlay");
+    howToPlay.remove();
     randomiseWord();
     console.log("randomiseWord() start game");
     const dyslexiaImageElement = document.getElementById("dyslexiaImage");
@@ -338,12 +341,6 @@ function playSound() {
         }, audio.duration);
     }
 }
-
-// const btnElement = document.getElementById("submitButton");
-// if (btnElement) {
-//     btnElement.addEventListener("click", validateWordInput);
-// }
-
     </script>
 </body>
 </html>
