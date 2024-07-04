@@ -30,14 +30,18 @@ let gameEnded = false;
 
 const buttonColour = "#7CCEB6";
 
+// Start game function
+
 function startGame() {
     const howToPlay = document.getElementById("howToPlay");
     if (howToPlay) {
         howToPlay.classList.add("hidden");
     }
-    
+
+    // Initial word randomisation
     randomiseWord();
     
+    // Sourcing elements for manipulation
     const dyslexiaImageElement = document.getElementById("dyslexiaImage");
     if (dyslexiaImageElement) {
         dyslexiaImageElement.remove();
@@ -69,6 +73,8 @@ function startGame() {
     }
 }
 
+// End game function
+
 function endGame() {
     if (!gameEnded) {
         gameEnded = true;
@@ -82,11 +88,11 @@ function endGame() {
         if (hintElement) {
             hintElement.remove();
         }
-
         EndGameColour();
     }
 }
 
+// EndGameColour function sets the game outcome colour depending on score total
 function EndGameColour() {
     let scoreColour = "";
     let scoreResponse = "";
@@ -126,6 +132,8 @@ function EndGameColour() {
     }
 }
 
+
+// playSound function plays word audio
 function playSound() {
     const audio = document.getElementById("myAudio");
     if (audio) {
@@ -134,26 +142,28 @@ function playSound() {
     }
 }
 
+// updateProgressBar displays progress bar.
 function updateProgressBar() {
     const audio = document.getElementById("myAudio");
     const progressBar = document.getElementById("progressBar");
     if (audio && progressBar) {
-        const progress = (audio.currentTime / audio.duration) * 100;
+        const progress = (audio.currentTime / audio.duration) * 100; // This works by calculating the fraction of the audio played by halving the duration by current time and multiplying by 100.
         progressBar.style.width = progress + "%";
     }
 }
 
+// Checking if the 
 function validateWordInput() {
-    if (randomWord && randomWord.word) {
+    if (randomWord && randomWord.word) { // ensures random word is not null or undefined 
         const textInput = document.getElementById("text_input");
         const wordHint = document.getElementById("hint-text");
-        if (textInput && wordHint) {
+        if (textInput && wordHint) { // checks if both elements are present in the DOM
             const userInput = textInput.value.trim().toLowerCase();
             if (userInput === randomWord.word.toLowerCase()) {
                 score++;
             }
 
-            completedWords.push(randomWord.word);
+            completedWords.push(randomWord.word); // adds the word to completed word.
             question++;
             textInput.value = "";
             if (question === 10) {
@@ -165,27 +175,33 @@ function validateWordInput() {
     }
 }
 
+// randomiseWord randomises the word for use in the application
+
 function randomiseWord() {
     if (wordData.length === 0) {
         console.error("Word data is empty.");
         return;
     }
 
-    const unusedWords = wordData.filter(word => !completedWords.includes(word.word));
+    const unusedWords = wordData.filter(word => !completedWords.includes(word.word)); 
+    // This creates an array only containing words that have not been attempted.
+    // !completedWords.includes(word.word)); checks if the word is not present in the completedWords array.
+    
+
     if (unusedWords.length === 0) {
         endGame();
         return;
     }
 
     const randomIndex = Math.floor(Math.random() * unusedWords.length);
-    randomWord = unusedWords[randomIndex];
+    randomWord = unusedWords[randomIndex]; // It then pulls a random word from the words that have not been used.
 
     const audio = document.getElementById("myAudio");
     const wordHint = document.getElementById("hint-text");
 
     if (audio && wordHint) {
-        audio.src = randomWord.sound;
-        const hint = randomWord.word.charAt(0) + randomWord.word.slice(1).replace(/[a-zA-Z]/g, " _ ");
+        audio.src = randomWord.sound; // random word's sound applied to the audio element.
+        const hint = randomWord.word.charAt(0) + randomWord.word.slice(1).replace(/[a-zA-Z]/g, " _ "); // random word applied to the hint element.
         wordHint.textContent = hint;
         console.log(wordHint.textContent);
     } else {
