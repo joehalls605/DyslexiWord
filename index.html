@@ -6,26 +6,25 @@
     <title>Dyslexia</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div id="app" class="p-10 flex flex-col items-center h-screen text-center border-gray-100 mt-8">
-        <h1 class="text-4xl font-bold border-1 mb-4">Dyslexio</h1>
+<body class="bg-gray-100">
+    <div id="app" class="p-10 flex flex-col items-center min-h-screen text-center border-gray-100 mt-8">
+        <h1 class="text-4xl font-bold border-2 mb-4 p-2">Dyslexio</h1>
         <p id="intro-bio" class="pt-4 text-xl mt-1">It's time to conquer dyslexia by practicing the most challenging words!</p>
-        <div id="howToPlay" class="p-7 mt-8 rounded w-full md:w-full lg:w-1/2">
-            <div style="background-color: #defaef;" class="p-9">
+        <div id="howToPlay" class="p-7 mt-8 rounded w-full md:w-full lg:w-1/2 bg-green-100">
+            <div class="p-9">
                 <p class="text-2xl">How to play?</p>
                 <p class="text-lg mt-6">First, listen to the word audio. <br>Then type the word and click 'Submit' or press enter on your keyboard.</p>
                 <p id="intro-text" class="pt-4 text-2xl mt-2">Click <button id="startGame" class="text-xl p-2 border-4 w-35 mt-5 bg-white hover:text-white hover:bg-gray-500" onclick="startGame();">Start Game</button> when you're ready to begin!</p>
             </div>
             <div id="header" class="bg-white p-4 flex justify-center items-center">
-                <img id="dyslexiaImage" class="mt-5" src="./images/dyslexia.png">
+                <img id="dyslexiaImage" class="mt-5" src="./images/dyslexia.png" alt="Dyslexia">
             </div>
         </div>
         
-      
         <div id="hint-section" class="mt-12">
             <div id="word-hint" class="hidden">
-                <p class="text-sm m-2 rounded-md">Word hint:</p>
-                <p id="hint-text" style="background-color: #c7f5e3" class="text-2xl p-8 rounded-md mb-8"></p>
+                <p class="text-sm m-2 rounded-md bg-blue-200">Word hint:</p>
+                <p id="hint-text" class="text-2xl p-8 rounded-md bg-green-200 mb-8"></p>
             </div>
         </div>
         <div class="flex flex-row hidden mt-10" id="game">
@@ -33,9 +32,9 @@
                 <audio id="myAudio" ontimeupdate="updateProgressBar()">
                     <source src="">
                 </audio>
-                <div onclick="playSound()">
+                <div onclick="playSound()" class="cursor-pointer">
                     <button class="pt-2">Play Audio</button>
-                    <div id="progressBar" style="background-color: #c7f5e3; width: 0;" class="h-2 mt-1 pt-1"></div>
+                    <div id="progressBar" class="bg-green-200 h-2 mt-1 pt-1" style="width: 0;"></div>
                 </div>
             </div>
             <div>
