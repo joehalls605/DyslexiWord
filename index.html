@@ -9,16 +9,19 @@
 <body>
     <div id="app" class="p-10 flex flex-col items-center h-screen text-center border-gray-100 mt-8">
         <h1 class="text-4xl font-bold border-1 mb-4">Dyslexio</h1>
-        <p id="intro-bio" class="pt-4 text-xl mt-1">It's time to conquer dyslexia by typing the most challenging words</p>
-        <div id="howToPlay" style="background-color: #defaef;" class="p-7 mt-8 rounded w-full md:w-full lg:w-1/2">
-            <p class="text-2xl">How to play?</p>
-            <p class="text-lg mt-6">First, listen to the word audio. <br>Next, input the word and click 'Submit' or press enter on your keyboard.</p>
+        <p id="intro-bio" class="pt-4 text-xl mt-1">It's time to conquer dyslexia by practicing the most challenging words!</p>
+        <div id="howToPlay" class="p-7 mt-8 rounded w-full md:w-full lg:w-1/2">
+            <div style="background-color: #defaef;" class="p-9">
+                <p class="text-2xl">How to play?</p>
+                <p class="text-lg mt-6">First, listen to the word audio. <br>Then type the word and click 'Submit' or press enter on your keyboard.</p>
+                <p id="intro-text" class="pt-4 text-2xl mt-2">Click <button id="startGame" class="text-xl p-2 border-4 w-35 mt-5 bg-white hover:text-white hover:bg-gray-500" onclick="startGame();">Start Game</button> when you're ready to begin!</p>
+            </div>
+            <div id="header" class="bg-white p-4">
+                <img id="dyslexiaImage" class="mt-5" src="./images/dyslexia.png">
+            </div>
         </div>
         
-        <div id="header">
-            <p id="intro-text" class="pt-4 text-2xl mt-2">Click <button id="startGame" class="text-xl p-2 border-4 w-35 mt-5 hover:text-white hover:bg-gray-500" onclick="startGame();">Start Game</button> when you're ready to begin!</p>
-            <img id="dyslexiaImage" class="mt-5" src="./images/dyslexia.png">
-        </div>
+      
         <div id="hint-section" class="mt-12">
             <div id="word-hint" class="hidden">
                 <p class="text-sm m-2 rounded-md">Word hint:</p>
@@ -45,7 +48,6 @@
     </div>
 
     <script>
-        // Define wordData
         const wordData = [
             {_id: "1", word: "acceptable", sound: "./sounds/acceptable.mp3"},
             {_id: "2", word: "accommodate", sound: "./sounds/accommodate.mp3"},
@@ -74,20 +76,17 @@
         let question = 0;
         let completedWords = [];
         let randomWord;
-        let gameEnded = false; // Flag to track if the game has ended
+        let gameEnded = false;
 
-        // Colours
         const buttonColour = "#7CCEB6";
 
         function startGame() {
-            debugger;
             const howToPlay = document.getElementById("howToPlay");
             if (howToPlay) {
-                howToPlay.remove();
+                howToPlay.classList.add("hidden");
             }
             
             randomiseWord();
-            console.log("randomiseWord() start game");
             
             const dyslexiaImageElement = document.getElementById("dyslexiaImage");
             if (dyslexiaImageElement) {
@@ -121,22 +120,19 @@
         }
 
         function endGame() {
-            if (!gameEnded) { // Check if the game has already ended
-                gameEnded = true; // Set the flag to true
+            if (!gameEnded) {
+                gameEnded = true;
 
-                // Remove the existing game elements
                 const gameElement = document.getElementById("game");
                 if (gameElement && gameElement.parentNode) {
                     gameElement.parentNode.removeChild(gameElement);
                 }
 
-                const scoreSection = document.getElementById("scoreSection");
-                if (scoreSection && scoreSection.parentNode) {
-                    scoreSection.parentNode.removeChild(scoreSection);
+                const hintElement = document.getElementById("word-hint");
+                if (hintElement) {
+                    hintElement.remove();
                 }
 
-                const hintElement = document.getElementById("word-hint");
-                hintElement.remove();
                 EndGameColour();
             }
         }
@@ -155,7 +151,6 @@
                 scoreResponse = "Practice makes perfect!";
             }
 
-            // Create and append the "GAME OVER" message
             const scoreElement = document.createElement("div");
             scoreElement.classList.add("pr-5", "pl-5", "pb-4", "flex", "flex-row", "justify-center");
             scoreElement.innerHTML = `
@@ -165,178 +160,94 @@
                     <p class="text-4xl mt-5 rounded-full ${scoreColour} w-36 h-36 flex items-center justify-center">${score} / 10</p>
                     <p class="text-2xl mt-5">${scoreResponse}</p>
                     <p class="text-1xl mt-5">Refresh the page to restart the game</p>
+                    <button id="resetButton" class="text-xl p-2 border-4 w-40 mt-5 hover:text-white hover:bg-gray-500">Restart</button>
                 </div>
             `;
             const appElement = document.getElementById("app");
             if (appElement) {
                 appElement.append(scoreElement);
             }
-        }
 
-        function resetApp() {
-            score = 0;
-            completedWords = [];
-            gameEnded = false;
-
-            const startGameElement = document.getElementById("startGame");
-            startGameElement.classList.remove("hidden");
-
-            const introSloganELement = document.getElementById("intro-slogan");
-            introSloganELement.classList.remove("hidden");
-
-            const scoreElement = document.getElementById("scoreSection");
-            if (scoreElement) {
-                scoreElement.remove();
-            }
-
-            const gameOverElement = document.getElementById("gameOver");
-            if (gameOverElement && gameOverElement.parentNode) {
-                gameOverElement.parentNode.removeChild(gameOverElement);
+            const resetButton = document.getElementById("resetButton");
+            if (resetButton) {
+                resetButton.addEventListener("click", function() {
+                    location.reload();
+                });
             }
         }
 
-        function randomiseWord() {
-            let wordNotFound = true;
-
-            while (wordNotFound) {
-                // Generating a random index
-                const randomIndex = Math.floor(Math.random() * wordData.length);
-
-                // Retrieving a random word from the wordData array using the random index
-                randomWord = wordData[randomIndex].word;
-
-                // Checking if the word is in the completedWords array
-                if (!completedWords.includes(randomWord)) { // if random word is not in completed words
-                    wordNotFound = false;
-                    completedWords.push(randomWord);
-                }
+        function playSound() {
+            const audio = document.getElementById("myAudio");
+            if (audio) {
+                audio.currentTime = 0; // Reset the audio to the beginning
+                audio.play();
             }
-
-            const audioSrc = `./sounds/${randomWord}.mp3`;
-            console.log("random word = " + randomWord);
-            const audioElement = document.getElementById("myAudio");
-            if (audioElement) {
-                audioElement.setAttribute("src", audioSrc);
-            }
-
-            const wordHintElement = document.getElementById("word-hint");
-            const hintTextElement = document.getElementById("hint-text");
-            if (wordHintElement && hintTextElement) {
-                wordHintElement.classList.remove("hidden");
-                const hintString = randomWord.charAt(0) + " _ ".repeat(randomWord.length - 1);
-                hintTextElement.textContent = hintString;
-            }
-            playSound();
-        }
-
-        function validateWordInput() {
-            console.log("validateWordInput()");
-            const progressBarElement = document.getElementById("progressBar");
-            if (progressBarElement) {
-                progressBarElement.style.width = "0";
-            }
-
-            const playSoundElement = document.getElementById("playSoundButton");
-
-            const text_input_element = document.getElementById("text_input");
-            if (text_input_element) {
-                const text_input_lowercase = text_input_element.value.toLowerCase();
-
-                const submitButtonElement = document.getElementById("submitButton");
-                if (submitButtonElement) {
-                    submitButtonElement.classList.add("border-gray-500");
-
-                    // UPDATING SUBMIT BUTTON.
-                    setTimeout(function () {
-                        submitButtonElement.classList.remove("border-gray-500");
-                    }, 100);
-                }
-
-                const appDivElement = document.getElementById("app");
-                const answerOutput = document.getElementById("answerOutput");
-
-                const scoreElement = document.getElementById("score");
-                const scoreHeaderElement = document.getElementById("scoreHeader");
-
-                question++;
-
-                // UPDATING OUTPUT - CORRECT
-                if (text_input_lowercase === randomWord) {
-                    text_input_element.classList.add("border-green-500");
-                    text_input_element.value = "";
-                    text_input_element.placeholder = "Enter a word...";
-                    score++;
-                    if (scoreElement) {
-                        scoreElement.textContent = score;
-                    }
-
-                    setTimeout(function () {
-                        if (submitButtonElement) {
-                            submitButtonElement.classList.remove("bg-gray-500", "text-white");
-                        }
-                        text_input_element.classList.remove("border-green-500");
-                    }, 1200);
-
-                    // UPDATING OUTPUT - INCORRECT
-                } else {
-                    text_input_element.classList.add("border-red-500");
-                    text_input_element.value = "";
-                    text_input_element.placeholder = "Enter a word...";
-
-                    setTimeout(function () {
-                        text_input_element.classList.remove("border-red-500");
-                    }, 1200);
-                }
-
-                // Check the score and call randomiseWord or endGame after word validation
-
-                if (question < 10 && !gameEnded) {
-                    randomiseWord();
-                    console.log("randomiseWord()");
-                } else if (!gameEnded) {
-                    endGame();
-                }
-            }
-        }
-
-        const textInputElement = document.getElementById("text_input");
-        if (textInputElement) {
-            textInputElement.addEventListener("keydown", function (event) {
-                if (event.key === "Enter") {
-                    validateWordInput();
-                }
-            });
-        }
-
-        function displayScore() {
-            return score;
         }
 
         function updateProgressBar() {
             const audio = document.getElementById("myAudio");
             const progressBar = document.getElementById("progressBar");
             if (audio && progressBar) {
-                const audioDuration = audio.duration;
-                const progress = (audio.currentTime / audioDuration) * 100;
-                progressBar.style.width = `${progress}%`;
+                const progress = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = progress + "%";
             }
         }
 
-        function playSound() {
-            const playSoundElement = document.getElementById("playSoundButton");
-            if (playSoundElement) {
-                playSoundElement.classList.add("border-gray-700");
-            }
-            var audio = document.getElementById("myAudio");
-            if (audio) {
-                audio.play();
-                setTimeout(function () {
-                    if (playSoundElement) {
-                        playSoundElement.classList.remove("border-gray-700");
+        function validateWordInput() {
+            if (randomWord && randomWord.word) {
+                const textInput = document.getElementById("text_input");
+                const wordHint = document.getElementById("hint-text");
+                if (textInput && wordHint) {
+                    const userInput = textInput.value.trim().toLowerCase();
+                    if (userInput === randomWord.word.toLowerCase()) {
+                        score++;
                     }
-                }, audio.duration);
+
+                    completedWords.push(randomWord.word);
+                    question++;
+                    textInput.value = "";
+                    if (question === 10) {
+                        endGame();
+                    } else {
+                        randomiseWord();
+                    }
+                }
             }
         }
+
+        function randomiseWord() {
+            if (wordData.length === 0) {
+                console.error("Word data is empty.");
+                return;
+            }
+
+            const unusedWords = wordData.filter(word => !completedWords.includes(word.word));
+            if (unusedWords.length === 0) {
+                endGame();
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * unusedWords.length);
+            randomWord = unusedWords[randomIndex];
+
+            const audio = document.getElementById("myAudio");
+            const wordHint = document.getElementById("hint-text");
+
+            if (audio && wordHint) {
+                audio.src = randomWord.sound;
+                const hint = randomWord.word.charAt(0) + randomWord.word.slice(1).replace(/[a-zA-Z]/g, " _ ");
+                wordHint.textContent = hint;
+                console.log(wordHint.textContent);
+            } else {
+                console.error("Audio or word hint element not found.");
+            }
+        }
+
+        document.getElementById("text_input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                validateWordInput();
+            }
+        });
     </script>
 </body>
 </html>
