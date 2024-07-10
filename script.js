@@ -127,7 +127,7 @@ function EndGameColour() {
     const resetButton = document.getElementById("resetButton");
     if (resetButton) {
         resetButton.addEventListener("click", function() {
-            location.reload();
+            location.reload(); // This reloads the current URL, as if the user has refreshed the browser. Used instead of manually reseting variables.
         });
     }
 }

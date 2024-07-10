@@ -8,6 +8,7 @@ Usage:
 Open the index.html file in your web browser.
 
 File Overview:
+
 Index.html - HTML Structure sets up the basic elemements for game title, instructions and gameplay interface.
 Tailwind CSS is used for the styling of the application.
 Script.js - JavaScript is used to implement game functionality.
