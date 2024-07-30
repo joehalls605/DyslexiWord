@@ -115,7 +115,6 @@ function EndGameColour() {
             <p class="text-2xl mt-4">You scored:</p>
             <p class="text-4xl mt-5 rounded-full ${scoreColour} w-36 h-36 flex items-center justify-center">${score} / 10</p>
             <p class="text-2xl mt-5">${scoreResponse}</p>
-            <p class="text-1xl mt-5">Refresh the page to restart the game</p>
             <button id="resetButton" class="text-xl p-2 border-4 w-40 mt-5 hover:text-white hover:bg-gray-500">Restart</button>
         </div>
     `;
