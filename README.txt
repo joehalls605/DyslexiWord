@@ -33,5 +33,5 @@ The completed word is added to the completedWords array, the question counter is
 If there are more words to guess, randomiseWord is called again. If the user has completed 10 words, the game ends.
 
 When the game ends, either by completing 10 words or exhausting the word list, the endGame function is called.
-he game interface is hidden, and the final score is displayed. The EndGameColour function determines the color of the score display based on the user's performance.
+The game interface is hidden, and the final score is displayed. The EndGameColour function determines the color of the score display based on the user's performance.
 A "Restart" button is provided, which reloads the page to start a new game.
